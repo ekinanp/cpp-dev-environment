@@ -18,4 +18,12 @@ class cpp_dev_environment::facter_environment {
   cpp_dev_environment::pa_component { 'cpp-hocon':
     ref => "refs/tags/0.1.5"
   }
+
+  cpp_dev_environment::pa_component { 'cpp-pcp-client':
+    ref => "FACT-1772"
+  }
+
+  cpp_dev_environment::pa_component { 'pxp-agent':
+    ref => "FACT-1772"
+  }
 }
