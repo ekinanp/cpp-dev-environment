@@ -18,6 +18,10 @@ class cpp_dev_environment {
    'CentOS': {
      $reqd_packages = [ 'boost-devel', 'openssl-devel', 'yaml-cpp-devel', 'libblkid-devel', 'libcurl-devel', 'gcc-c++', 'make', 'tar', 'cmake3', 'git', 'vim' ]
    }
+
+   'Debian': {
+     $reqd_packages = [ 'build-essential', 'libboost-all-dev', 'libssl-dev', 'libyaml-cpp-dev', 'libblkid-dev', 'libcurl4-openssl-dev', 'wget', 'tar', 'cmake', 'git', 'vim' ]
+   }
  }
 
  # Install the base packages
@@ -33,5 +37,15 @@ class cpp_dev_environment {
      target  => "/usr/bin/cmake3",
      require =>  Package["cmake3"]
    }
+ }
+
+ $home_dir = "/root"
+
+ # Set-up Git config info.
+ # TODO: This should probably be parametrized on the GitHub user
+ # Maybe try experimenting with ERB templates?
+ file { "${home_dir}/.gitconfig":
+   ensure => present,
+   source => "puppet:///modules/cpp_dev_environment/gitconfig",
  }
 }

@@ -2,12 +2,17 @@ define cpp_dev_environment::pa_component (
   String $component = $title,
   String $ref
 ) {
-  $work_dir = "/tmp"
+  $home_dir = "/root"
 
-  exec { "build the component ${component}":
-    command   => "/usr/bin/bash ./build_pa_component.sh ${component} ${ref}",
-    cwd       => $work_dir,
+  $bash = $::operatingsystem ? {
+    "Debian" => "/bin/bash",
+    default  => "/usr/bin/bash"
+  }
+
+  exec { "clone the component ${component}":
+    command   => "${bash} ./clone_pa_component.sh ${component} ${ref}",
+    cwd       => $home_dir,
     logoutput => true,
-    require   => File["${work_dir}/build_pa_component.sh"]
+    require   => File["${home_dir}/clone_pa_component.sh"]
   }
 }

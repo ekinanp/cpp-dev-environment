@@ -3,17 +3,19 @@
 class cpp_dev_environment::facter_environment {
   contain cpp_dev_environment
 
-  file { '/tmp/build_pa_component.sh':
+  $home_dir = "/root" 
+
+  file { "${home_dir}/clone_pa_component.sh":
     ensure => present,
-    source => "puppet:///modules/cpp_dev_environment/build_pa_component.sh",
+    source => "puppet:///modules/cpp_dev_environment/clone_pa_component.sh",
     mode   => "0777"
   }
 
   cpp_dev_environment::pa_component { 'leatherman':
-    ref => "master"
+    ref => "FACT-1772"
   }
 
   cpp_dev_environment::pa_component { 'cpp-hocon':
-    ref => "master"
+    ref => "refs/tags/0.1.5"
   }
 }
